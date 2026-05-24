@@ -1,0 +1,287 @@
+/*
+ * ============================================================
+ * Project Detail Page Styles — High-Fidelity 1:1 Recreation
+ *
+ * Structure per page (matches screenshot exactly):
+ *   1. .project-page-header  → centered bold uppercase title (H1)
+ *   2. [paddingTop: 127px from first module] → large editorial whitespace
+ *   3. .module-text (YEAR / SOFTWARE)  → centered, inline labels
+ *   4. .module-text (description)      → left-aligned inside container
+ *   5. image/video modules             → full width
+ *   6. .project-nav                    → prev / All Work / next
+ *
+ * TYPOGRAPHY:
+ *   Original Typekit fonts:
+ *     "ttyp"  → bold labels (YEAR:, SOFTWARE:)  — substitute: Jost 700
+ *     "ftnk"  → body / regular text             — substitute: Inter 400
+ *     "shzc"  → page title H1                   — substitute: Jost 700
+ * ============================================================
+ */
+
+/* ── Page wrapper ────────────────────────────────────────────── */
+.project-page {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* ── Fixed nav spacer (100px tall header) ────────────────────── */
+.project-header-placeholder {
+  height: 100px;
+}
+
+/* ── Page-level content wrapper ──────────────────────────────── */
+/* Original: margin-left: 4%; margin-right: 4%; */
+.project-site-content {
+  margin-left: 4%;
+  margin-right: 4%;
+  padding-bottom: 100px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * PROJECT PAGE HEADER — centered bold title
+ * ═══════════════════════════════════════════════════════════════ */
+.project-page-header {
+  padding-top: 40px;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+/*
+ * The H1 matches the reference screenshot:
+ *   - Large bold condensed uppercase
+ *   - color: #111111
+ *   - font: Jost 700 (closest to original "shzc" Typekit)
+ *   - letter-spacing: tight like the original
+ *   - No margin-bottom (the gap below comes from paddingTop of first module)
+ */
+.project-page-header h1 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.8vw, 38px);
+  line-height: 1.2;
+  color: #111111;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * PROJECT MODULES WRAPPER
+ * ═══════════════════════════════════════════════════════════════ */
+.project-modules {
+  /* modules manage their own padding via inline paddingTop values */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * TEXT MODULE (.module-text)
+ *
+ * Layout from screenshot:
+ *   • Container: full width (92% of page via parent), text-align: center
+ *   • YEAR / SOFTWARE divs: no explicit text-align → inherit center → CENTERED
+ *   • Description div: has inline style="text-align:left" → LEFT-ALIGNED
+ *     (this is how the CMS authored it; left-aligned text inside centered container)
+ *
+ * Font overrides:
+ *   • font-family:ttyp (bold labels) → Jost 700
+ *   • font-family:ftnk (body text)  → Inter 400
+ *   • font-size:15px inline → keep (original is 15px for metadata, 14px for description)
+ * ═══════════════════════════════════════════════════════════════ */
+.module-text {
+  width: 100%;
+  /* Center text as a default — YEAR/SOFTWARE inherit this and appear centered */
+  text-align: center;
+  /* Inter for base body text */
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #111111;
+}
+
+/* Block-level divs inside rich-text */
+.module-text > div,
+.module-text > p {
+  margin-bottom: 0;
+  min-height: 1em; /* preserve empty lines (br-only divs) */
+}
+
+/*
+ * Strip the original Typekit font-family references and map them to our substitutes.
+ * We target via attribute selector since they're inline styles.
+ * ttyp → Jost (bold labels)
+ * ftnk → Inter (body)
+ * shzc → Jost (display headings)
+ */
+.module-text span[style*="font-family:ttyp"],
+.module-text span[style*="font-family: ttyp"] {
+  font-family: 'Jost', sans-serif !important;
+}
+.module-text span[style*="font-family:ftnk"],
+.module-text span[style*="font-family: ftnk"] {
+  font-family: 'Inter', sans-serif !important;
+}
+.module-text span[style*="font-family:shzc"],
+.module-text span[style*="font-family: shzc"] {
+  font-family: 'Jost', sans-serif !important;
+}
+
+/* Preserve bold weight for ttyp (YEAR:, SOFTWARE: labels) */
+.module-text span[style*="font-weight:700"],
+.module-text span[style*="font-weight: 700"] {
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * IMAGE MODULE — single image (full width or constrained)
+ * ═══════════════════════════════════════════════════════════════ */
+.module-image {
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.module-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * IMAGE GRID MODULE — flex proportional layout (media_collection)
+ * ═══════════════════════════════════════════════════════════════ */
+.module-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+}
+
+.grid-image-item {
+  position: relative;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.grid-image-item__filler {
+  display: block;
+  /* padding-bottom set inline per image to maintain original aspect ratio */
+}
+
+.grid-image-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.grid-image-item img.loading { opacity: 0; }
+.grid-image-item img.loaded  { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+ * VIDEO / EMBED MODULE
+ * ═══════════════════════════════════════════════════════════════ */
+.module-video {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.module-video__aspect {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  /* padding-bottom set inline from original aspect ratio */
+}
+
+.module-video__aspect iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * TREE MODULE — side-by-side column layout
+ * ═══════════════════════════════════════════════════════════════ */
+.module-tree {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.module-tree__column {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * PROJECT NAVIGATION (prev / All Work / next)
+ * ═══════════════════════════════════════════════════════════════ */
+.project-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 0 80px;
+  border-top: 1px solid #eeeeee;
+  margin-top: 80px;
+}
+
+.project-nav__link {
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.project-nav__link:hover {
+  opacity: 0.5;
+}
+
+.project-nav__all {
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * RESPONSIVE
+ * ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 932px) {
+  .project-header-placeholder { height: 100px; }
+  .project-site-content { margin: 0 4%; }
+  .project-page-header h1 { font-size: clamp(18px, 4vw, 28px); }
+  .module-text { font-size: 14px; }
+  .module-tree { flex-direction: column; }
+  .module-tree__column { width: 100%; }
+}
+
+@media (max-width: 540px) {
+  .project-page-header h1 { font-size: 18px; letter-spacing: 0.02em; }
+  .module-text { font-size: 13px; }
+  .module-image-grid { flex-direction: column; gap: 5px; }
+  .grid-image-item {
+    width: 100% !important;
+    flex-grow: unset !important;
+  }
+  .grid-image-item__filler { display: none !important; }
+  .grid-image-item img {
+    position: relative !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+  .project-nav { flex-direction: column; gap: 24px; text-align: center; }
+}
