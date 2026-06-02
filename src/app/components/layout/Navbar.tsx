@@ -14,6 +14,10 @@
 import { Link, useLocation } from "react-router";
 import { useState } from "react";
 
+// 1. IMPORT the logo using a relative dot-slash (./) path
+import homeLogo from "./LOGO.png"; 
+
+// This is the logo used for the dark header on other pages
 const LOGO_IMAGE_URL =
   "https://cdn.myportfolio.com/5c9b039b-a19b-4c88-a6bc-848d4b3b1d36/669108cf-09d1-4235-8314-0597c3ff7e87_rwc_0x0x2084x2084x4096.png?h=75622f11a1d22707415e8b344b50affd";
 
@@ -22,31 +26,50 @@ export default function Navbar() {
   const isHome = location.pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // ── Home page: preserve the original floating pill buttons ────────────
+  // ── Home page: Word-only text layout with Image Logo & More Works button ──
   if (isHome) {
     return (
-      <div className="absolute top-0 left-0 w-full z-50 pointer-events-none">
-        <div className="relative size-full pointer-events-auto">
+      /* Changed height to h-screen so items can safely attach to the bottom */
+      <div className="absolute top-0 left-0 w-full h-screen z-40 pointer-events-none">
+        <div className="relative w-full h-full pointer-events-auto">
+          {/* Top Left: Logo */}
           <Link
             to="/"
-            className="absolute top-8 left-8 px-8 py-4 bg-white text-slate-900 rounded-full hover:bg-slate-100 transition-colors"
+            className="absolute top-8 left-8 hover:opacity-80 transition-opacity flex items-center"
           >
-            Logo
+            <img 
+              src={homeLogo} 
+              alt="Logo" 
+              className="h-10 md:h-12 w-auto object-contain block" 
+            />
           </Link>
-          <nav className="absolute top-8 right-8 flex gap-4">
+
+          {/* Top Right: Nav Links */}
+          <nav className="absolute top-8 right-8 flex gap-8 items-center">
             <Link
               to="/work"
-              className="px-8 py-4 bg-white text-slate-900 rounded-full hover:bg-slate-100 transition-colors"
+              className="text-black text-2xl md:text-3xl font-medium hover:opacity-60 transition-opacity"
+              style={{ fontFamily: "'Microsoft Yi Baiti', sans-serif" }}
             >
               Works
             </Link>
             <Link
               to="/about"
-              className="px-8 py-4 bg-white text-slate-900 rounded-full hover:bg-slate-100 transition-colors"
+              className="text-black text-2xl md:text-3xl font-medium hover:opacity-60 transition-opacity"
+              style={{ fontFamily: "'Microsoft Yi Baiti', sans-serif" }}
             >
               About
             </Link>
           </nav>
+
+          {/* Bottom Right: More Works Outline Button */}
+          <Link
+            to="/work"
+            className="absolute bottom-8 right-8 px-5 py-1.5 border border-black text-black rounded-full text-2xl md:text-3xl font-medium hover:bg-black hover:text-white transition-all duration-300"
+            style={{ fontFamily: "'Microsoft Yi Baiti', sans-serif" }}
+          >
+            More Works↓
+          </Link>
         </div>
       </div>
     );
@@ -107,7 +130,7 @@ export default function Navbar() {
           <Link
             to="/work"
             onClick={() => setMobileOpen(false)}
-            style={{ color: "#FFFFFF", fontSize: 22, lineHeight: "32px", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "'Jost', sans-serif" }}
+            style={{ color: "#FFFFFF", fontSize: 22, lineHeight: "32px", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "'Microsoft Yi Baiti', sans-serif" }}
           >
             Work
           </Link>
@@ -121,10 +144,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/*
-       * site-header: fixed, #111111 bg, 100px tall, z-index: 100
-       * padding: 0 4%; align-items: center; display: flex;
-       */}
+      {/* site-header: fixed, #111111 bg, 100px tall */}
       <header
         style={{
           display: "flex",
@@ -141,9 +161,6 @@ export default function Navbar() {
           width: "100%",
         }}
       >
-        {/*
-         * nav: left aligned
-         */}
         <nav
           style={{
             textAlign: "left",
@@ -174,7 +191,7 @@ export default function Navbar() {
               fontWeight: 500,
               textTransform: "uppercase",
               textDecoration: "none",
-              fontFamily: "'Jost', sans-serif",
+              fontFamily: "'Microsoft Yi Baiti', sans-serif",
               letterSpacing: "0.15em",
             }}
           >
@@ -196,9 +213,6 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/*
-         * logo-wrap: Absolutely centered for perfect alignment
-         */}
         <div style={{
           position: "absolute",
           left: "50%",
@@ -222,11 +236,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/*
-         * right side spacer / hamburger
-         */}
         <div style={{ marginLeft: "auto", textAlign: "right" }}>
-          {/* Hamburger — visible only on mobile (≤932px) */}
           <button
             className="hamburger-nav-btn"
             onClick={() => setMobileOpen(true)}
@@ -242,11 +252,9 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Responsive adjustments for header */}
       <style>{`
         @media (max-width: 932px) {
           .hamburger-nav-btn { display: block !important; }
-          /* Hide desktop nav links */
           header nav { display: none !important; }
         }
       `}</style>

@@ -1,27 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router"; 
 import { motion } from "motion/react";
 import { worksData } from "../data/works";
 import WorkCard from "../components/portfolio/WorkCard";
 
 /**
- * Pixel-accurate recreation of aroombybin.myportfolio.com/work
- *
  * Layout:
- *  - Fixed header placeholder (150px) to account for the sticky nav
- *  - .site-content wrapper: margin 4% on each side (92% width)
- *  - .project-covers: flex-wrap, 2 columns on desktop, 1 on mobile
- *  - Each card: width calc(50% - 2.5px), margin-right: 5px
- *  - Hover: light blue (#A3C8DD) overlay at 0.9 opacity + centered title/date
- *  - Back-to-top button fixed bottom-right (hidden on mobile)
+ * - Fixed header placeholder (150px) to account for the sticky nav
+ * - .site-content wrapper: margin 4% on each side (92% width)
+ * - .project-covers: flex-wrap, 2 columns on desktop, 1 on mobile
+ * - Back-to-top button fixed bottom-right
  */
 export default function Works() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
-  // Page-load animation via CSS class toggling (simulates original fade-in)
+  // Reverted to standard window scrolling
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     document.title = "Phat Le Tuan - Work";
+    
+    const handleScrollVisibility = () => {
+      if (window.scrollY > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollVisibility);
     return () => {
       document.title = "Phat Le Tuan";
+      window.removeEventListener("scroll", handleScrollVisibility);
     };
   }, []);
 
@@ -36,7 +48,7 @@ export default function Works() {
       {/* Space for the fixed header */}
       <div className="works-header-placeholder" />
 
-      {/* Main gallery grid */}
+      {/* Main gallery grid (Standard layout, no snapping/fading) */}
       <div className="works-site-content">
         <main>
           <section className="project-covers" aria-label="Portfolio works">
@@ -47,19 +59,38 @@ export default function Works() {
         </main>
       </div>
 
-      {/* Footer — same as original: "↑Back to Top" + "Adobe Portfolio" */}
-      <footer className="works-footer">
-        <a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }}>
-          ↑ Back to Top
+      {/* Footer — Styled with Monotype Corsiva and linked to Photography */}
+      <footer className="works-footer flex flex-col items-center justify-center gap-2 pt-16 pb-24 w-full">
+        <Link
+          to="/photography"
+          className="text-black text-3xl md:text-4xl hover:opacity-60 transition-opacity"
+          style={{ fontFamily: "'Monotype Corsiva', cursive" }}
+        >
+          Photography
+        </Link>
+        <a 
+          href="#" 
+          onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+          className="text-black text-3xl md:text-4xl hover:opacity-60 transition-opacity"
+          style={{ fontFamily: "'Monotype Corsiva', cursive" }}
+        >
+          Illustrations
         </a>
       </footer>
 
-      {/* Fixed back-to-top button (only visible on desktop per original) */}
-      <button
+      {/* Fixed back-to-top button */}
+      <motion.button
         className="back-to-top-fixed"
         onClick={scrollToTop}
         aria-label="Back to top"
         title="Back to top"
+        initial={{ opacity: 0, scale: 0.8, pointerEvents: "none" }}
+        animate={{
+          opacity: showBackToTop ? 1 : 0,
+          scale: showBackToTop ? 1 : 0.8,
+          pointerEvents: showBackToTop ? "auto" : "none",
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <svg
           className="icon-back-to-top"
@@ -69,7 +100,7 @@ export default function Works() {
         >
           <path d="M12 4l-8 8h5v8h6v-8h5z" />
         </svg>
-      </button>
+      </motion.button>
     </motion.div>
   );
 }
