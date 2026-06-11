@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 // Dummy data for your photography slider. Replace these with your actual image paths.
@@ -10,11 +10,58 @@ const photographyWorks = [
   { id: 5, src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=800", alt: "Cinematic architecture" },
 ];
 
+// 1. Moved layout array outside the component so it doesn't get re-created on every render
+const layout = [
+  { w: 180, h: 180, mt: 60 },
+  { w: 160, h: 260, mt: 0 },
+  { w: 300, h: 420, mt: 120 },
+  { w: 220, h: 300, mt: 40 },
+  { w: 520, h: 620, mt: 100 }, // BIG center block
+  { w: 180, h: 260, mt: 20 },
+  { w: 220, h: 300, mt: 80 },
+  { w: 200, h: 200, mt: 0 },
+  { w: 620, h: 320, mt: 140 }, // WIDE block
+  { w: 260, h: 200, mt: 20 },
+];
+
 export default function Photography() {
+  const scrollContainerRef = useRef(null);
+
   useEffect(() => {
     document.title = "Phat Le Tuan - Photography";
     return () => {
       document.title = "Phat Le Tuan";
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+
+      const maxScrollLeft = el.scrollWidth - el.clientWidth;
+      const currentScrollY = window.scrollY;
+      const threshold = 140; 
+
+      if (e.deltaY > 0) {
+        // --- SCROLLING DOWN ---
+        if (currentScrollY >= threshold && el.scrollLeft < maxScrollLeft) {
+          e.preventDefault(); 
+          el.scrollLeft += e.deltaY; 
+        }
+      } else if (e.deltaY < 0) {
+        // --- SCROLLING UP ---
+        if (currentScrollY <= threshold && el.scrollLeft > 0) {
+          e.preventDefault(); 
+          el.scrollLeft += e.deltaY; 
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
@@ -26,11 +73,11 @@ export default function Photography() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      {/* 1. Space for the fixed Navbar (keeps content from hiding under the header) */}
+      {/* Space for the fixed Navbar */}
       <div className="h-[150px] w-full shrink-0" />
 
-      {/* 2. Page Title matching your recent Monotype Corsiva styling */}
-      <div className="w-full text-center mb-8 px-4">
+      {/* Page Title */}
+      <div className="w-full text-center mb-8 px-4 shrink-0">
         <h1 
           className="text-black text-5xl md:text-6xl"
           style={{ fontFamily: "'Monotype Corsiva', cursive" }}
@@ -39,58 +86,49 @@ export default function Photography() {
         </h1>
       </div>
 
-      {/* 3. Infinite Scrolling Photo Gallery */}
-      <div className="relative flex overflow-hidden w-full py-10 group">
-        
-        {/* Track 1 */}
-        <div className="flex gap-4 pr-4 animate-loop-scroll group-hover:[animation-play-state:paused]">
-          {photographyWorks.map((photo) => (
-            <div 
-              key={photo.id} 
-              className="w-[280px] h-[400px] md:w-[450px] md:h-[600px] flex-shrink-0 overflow-hidden"
-            >
-              <img 
-                src={photo.src} 
-                alt={photo.alt} 
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
+      {/* Horizontal Scrolling Photo Gallery */}
+      <div 
+        ref={scrollContainerRef}
+        className="w-full py-10 overflow-x-auto scrollbar-hide flex-grow"
+      >
+        <div className="flex items-start gap-16 px-16 w-max">
+          {photographyWorks.map((photo, index) => {
+            const l = layout[index % layout.length];
 
-        {/* Track 2 (Exact Duplicate needed to make the infinite loop seamless) */}
-        <div 
-          className="flex gap-4 pr-4 animate-loop-scroll group-hover:[animation-play-state:paused]" 
-          aria-hidden="true"
-        >
-          {photographyWorks.map((photo) => (
-            <div 
-              key={`${photo.id}-duplicate`} 
-              className="w-[280px] h-[400px] md:w-[450px] md:h-[600px] flex-shrink-0 overflow-hidden"
-            >
-              <img 
-                src={photo.src} 
-                alt={photo.alt} 
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-          ))}
+            return (
+              <div
+                key={photo.id}
+                className="flex-shrink-0 overflow-hidden transition-all duration-500 hover:scale-105"
+                style={{
+                  width: `${l.w}px`,
+                  height: `${l.h}px`,
+                  marginTop: `${l.mt}px`,
+                }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            );
+          })}
         </div>
-
       </div>
 
-      {/* CSS Keyframes injected directly to handle the perfect hardware-accelerated scroll loop */}
+      {/* Extra spacing at the bottom */}
+      <div className="h-[60vh] flex items-center justify-center bg-neutral-50 border-t border-gray-100">
+        <p className="text-gray-400 italic">© Phat Le Tuan Portfolio</p>
+      </div>
+
+      {/* CSS to hide native scrollbars */}
       <style>{`
-        @keyframes loop-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-100%);
-          }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
-        .animate-loop-scroll {
-          animation: loop-scroll 35s linear infinite;
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
       `}</style>
     </motion.div>

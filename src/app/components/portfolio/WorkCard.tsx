@@ -12,7 +12,7 @@ export default function WorkCard({ work }: WorkCardProps) {
 
   return (
     <Link
-      to={`/work/${work.id}`}
+      to={`/works/${work.id}`}
       className="project-cover-item"
       aria-label={`View project: ${work.title}`}
       onMouseEnter={() => setIsHovered(true)}

@@ -1,0 +1,160 @@
+/* ── TiemBanh project page ──────────────────────────────────────────────── */
+
+.tiembanh {
+  padding: 60px 0 120px;
+  font-family: 'Microsoft Yi Baiti', sans-serif;
+  overflow-x: hidden;
+}
+
+/* INTRO */
+.tiembanh__intro {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+
+.tiembanh__watermark {
+  position: absolute;
+  top: -10px;
+  right: 24px;
+  width: 420px;
+  height: auto;
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.tiembanh__title {
+  position: relative;
+  z-index: 1;
+  font-family: 'Monotype Corsiva', 'Brush Script MT', cursive;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.tiembanh__meta {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.tiembanh__meta p { margin: 2px 0; }
+
+.tiembanh__desc {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0;
+}
+
+/* ── MARQUEE ─────────────────────────────────────────────────────────────── */
+
+.marquee-track {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.marquee-inner {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  animation: marquee-scroll linear infinite;
+}
+
+.marquee-track:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.marquee-item img,
+.marquee-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Static video rows (no scroll) ──────────────────────────────────────── */
+
+.video-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin-bottom: 4px;
+  width: 100%;
+  justify-content: center;
+}
+
+.video-row .marquee-item {
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #111; /* shows while video loads */
+}
+
+.video-row .marquee-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── BOTTOM SECTION ──────────────────────────────────────────────────────── */
+
+.tiembanh__bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  align-items: end;
+  max-width: 900px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+
+.tiembanh__bottom img,
+.tiembanh__bottom-video {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.tiembanh__bottom-caption {
+  padding: 16px 8px;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.tiembanh__bottom-caption p { margin: 0; }
+.tiembanh__bottom-caption p:first-child { margin-bottom: 12px; }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .tiembanh__watermark { font-size: 120px; }
+
+  .tiembanh__bottom {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tiembanh__bottom-caption {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+}

@@ -1,0 +1,162 @@
+/* ── Lusine project page ──────────────────────────────────────────────────── */
+
+.lusine {
+  padding: 80px 0 120px;
+  font-family: 'Microsoft Yi Baiti', sans-serif;
+  overflow-x: hidden;
+  background: #fff;
+}
+
+/* ── INTRO ───────────────────────────────────────────────────────────────── */
+.lusine__intro {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+
+.lusine__watermark {
+  position: absolute;
+  top: -10px;
+  right: 24px;
+  width: 420px;
+  height: auto;
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.lusine__title {
+  position: relative;
+  z-index: 1;
+  font-family: 'Monotype Corsiva', 'Apple Chancery', cursive;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.lusine__meta {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+.lusine__meta p { margin: 2px 0; }
+
+.lusine__desc {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0;
+}
+
+/* ── SECTION LABEL ───────────────────────────────────────────────────────── */
+.lusine__section-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  padding: 0 24px;
+  margin: 32px 0 8px;
+}
+
+/* ── CAPTION ─────────────────────────────────────────────────────────────── */
+.lusine__caption {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #444;
+  padding: 12px 24px 0;
+  max-width: 600px;
+}
+.lusine__caption p { margin: 2px 0; }
+
+/* ── PHOTO GRID (3 col) ──────────────────────────────────────────────────── */
+.lusine__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.lusine__grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── SIDE BY SIDE ────────────────────────────────────────────────────────── */
+.lusine__sidebyside {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.lusine__sidebyside img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── REEL ROW (vertical 9:16 videos) ────────────────────────────────────── */
+.lusine__reels {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 4px;
+  flex-wrap: nowrap;
+}
+.lusine__reel-item {
+  flex: 1;
+  max-width: 340px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: #111;
+}
+.lusine__reel-item video,
+.lusine__reel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── SINGLE FULL IMAGE ───────────────────────────────────────────────────── */
+.lusine__full-img {
+  width: 100%;
+  margin-bottom: 4px;
+}
+.lusine__full-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── TOTE BAG ROW ────────────────────────────────────────────────────────── */
+.lusine__tote {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.lusine__tote img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .lusine__watermark { width: 200px; }
+  .lusine__grid { grid-template-columns: 1fr 1fr; }
+  .lusine__sidebyside { grid-template-columns: 1fr; }
+  .lusine__reels { flex-wrap: wrap; }
+  .lusine__reel-item { max-width: 100%; flex: 0 0 calc(50% - 2px); }
+  .lusine__tote { grid-template-columns: 1fr 1fr; }
+}

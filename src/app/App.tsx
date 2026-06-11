@@ -15,7 +15,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="work" element={<Works />} />
-          <Route path="work/:slug" element={<WorkDetail />} />
+          <Route path="works/:id" element={<WorkDetail />} />
           
           {/* 2. Added the Photography nested route */}
           <Route path="photography" element={<Photography />} />
