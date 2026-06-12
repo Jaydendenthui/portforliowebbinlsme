@@ -63,30 +63,20 @@ function VideoRow({
   itemWidth?: number;
   itemAspect?: string;
 }) {
-  const [aw, ah] = itemAspect.split("/").map(Number);
-  const itemHeight = Math.round((itemWidth * ah) / aw);
-
   return (
-    <div style={{ display: "flex", gap: "4px", marginBottom: "4px", justifyContent: "center", width: "100%" }}>
+    <div className="video-row-container">
       {items.map((src, i) => (
         <div
           key={i}
-          style={{
-            width: `${itemWidth}px`,
-            height: `${itemHeight}px`,
-            flexShrink: 0,
-            overflow: "hidden",
-            background: "#111",
-          }}
+          className="video-row-item"
+          style={
+            {
+              "--item-width": `${itemWidth}px`,
+              "--item-aspect": itemAspect,
+            } as React.CSSProperties
+          }
         >
-          <video
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          />
+          <video src={src} autoPlay muted loop playsInline />
         </div>
       ))}
     </div>
@@ -95,8 +85,7 @@ function VideoRow({
 
 // ── TiemBanh ─────────────────────────────────────────────────────────────────
 export default function TiemBanh() {
-  const photoRow1 = [photo05, photo06, photo07, photo08];
-  const photoRow2 = [photo09, photo10, photo11, photo12, photo13];
+  const photoRow1 = [photo05, photo06, photo07, photo08, photo09, photo10, photo11, photo12, photo13];
 
   const videoRow1 = ["/videos/video-01-h264.mp4", "/videos/video-02-h264.mp4", "/videos/video-03-h264.mp4"];
   const videoRow2 = ["/videos/video-04-h264.mp4", "/videos/video-05-h264.mp4"];
@@ -133,8 +122,9 @@ export default function TiemBanh() {
       </section>
 
       {/* ── MARQUEE PHOTO ROWS ──────────────────────────────────── */}
-      <MarqueeRow items={photoRow1} speed={35} itemWidth="220px" itemAspect="1 / 1" />
-      <MarqueeRow items={photoRow2} speed={28} itemWidth="220px" itemAspect="1 / 1" reverse />
+      <div className="marquee-wrapper">
+        <MarqueeRow items={photoRow1} speed={35} itemWidth="220px" itemAspect="1 / 1" />
+      </div>
 
       {/* ── STATIC VIDEO ROWS (rows 3–6) ────────────────────────── */}
       <VideoRow items={videoRow1} itemWidth={340} itemAspect="16 / 9" />
@@ -143,7 +133,9 @@ export default function TiemBanh() {
       <VideoRow items={videoRow4} itemWidth={480} itemAspect="16 / 9" />
 
       {/* ── MARQUEE PORTRAIT PHOTOS ─────────────────────────────── */}
-      <MarqueeRow items={photoRow3} speed={30} itemWidth="260px" itemAspect="3 / 4" />
+      <div className="marquee-wrapper">
+        <MarqueeRow items={photoRow3} speed={30} itemWidth="260px" itemAspect="3 / 4" />
+      </div>
 
       {/* ── BOTTOM — 2 videos + caption ─────────────────────────── */}
       <section className="tiembanh__bottom">
@@ -172,6 +164,20 @@ export default function TiemBanh() {
           <p>Edit by me</p>
           <p>Design by me</p>
         </aside>
+      </section>
+
+      {/* ── BIG BANNER VIDEO ────────────────────────────────────── */}
+      <section className="tiembanh__banner">
+        <div className="tiembanh__banner-wrap">
+          <video
+            src="/videos/tiembanh-bot-h264.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="tiembanh__banner-video"
+          />
+        </div>
       </section>
 
     </div>

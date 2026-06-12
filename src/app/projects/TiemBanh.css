@@ -6,7 +6,8 @@
   overflow-x: hidden;
 }
 
-/* INTRO */
+/* ── INTRO ───────────────────────────────────────────────────────────────── */
+
 .tiembanh__intro {
   position: relative;
   max-width: 100%;
@@ -31,7 +32,7 @@
   position: relative;
   z-index: 1;
   font-family: 'Monotype Corsiva', 'Brush Script MT', cursive;
-  font-size: clamp(52px, 8vw, 70px);
+  font-size: clamp(36px, 7vw, 70px);
   font-weight: 400;
   margin: 15px 0 24px;
   line-height: 1.05;
@@ -51,7 +52,7 @@
 .tiembanh__desc {
   position: relative;
   z-index: 1;
-  font-size: 20px;
+  font-size: clamp(13px, 1.5vw, 20px);
   line-height: 1.9;
   max-width: 800px;
   margin: 0;
@@ -60,6 +61,27 @@
 }
 
 /* ── MARQUEE ─────────────────────────────────────────────────────────────── */
+
+.marquee-wrapper {
+  position: relative;
+  margin: 0 40px;
+  overflow: hidden;
+}
+
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: white;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-wrapper::before { left: 0; }
+.marquee-wrapper::after  { right: 0; }
 
 .marquee-track {
   overflow: hidden;
@@ -96,24 +118,25 @@
   display: block;
 }
 
-/* ── Static video rows ───────────────────────────────────────────────────── */
+/* ── VIDEO ROWS ──────────────────────────────────────────────────────────── */
 
-.video-row {
+.video-row-container {
   display: flex;
-  flex-wrap: nowrap;
   gap: 4px;
   margin-bottom: 4px;
-  width: 100%;
   justify-content: center;
+  width: 100%;
 }
 
-.video-row .marquee-item {
+.video-row-item {
   flex-shrink: 0;
+  width: var(--item-width);
+  aspect-ratio: var(--item-aspect);
   overflow: hidden;
   background: #111;
 }
 
-.video-row .marquee-item video {
+.video-row-item video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -142,26 +165,101 @@
 
 .tiembanh__bottom-caption {
   padding: 16px 8px;
-  font-size: 12px;
-  line-height: 1.8;
+  font-size: clamp(13px, 1.5vw, 20px);
+  line-height: 1.9;
   text-align: right;
+  -webkit-text-stroke: 0.5px currentColor;
 }
 
 .tiembanh__bottom-caption p { margin: 0; }
 .tiembanh__bottom-caption p:first-child { margin-bottom: 12px; }
 
-/* Mobile */
+/* ── BANNER VIDEO ────────────────────────────────────────────────────────── */
+
+.tiembanh__banner {
+  margin: 24px 40px 0;
+}
+
+.tiembanh__banner-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.tiembanh__banner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── TABLET (≤ 900px) ────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .video-row-container {
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+
+  .video-row-item {
+    flex: 1 1 calc(50% - 6px);
+    width: auto !important;
+    min-width: 140px;
+  }
+
+  .tiembanh__bottom {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+}
+
+/* ── MOBILE (≤ 600px) ────────────────────────────────────────────────────── */
+
 @media (max-width: 600px) {
-  .tiembanh__intro { padding: 80px 20px 0; }
-  .tiembanh__watermark { width: 80vw; }
-  .tiembanh__title { font-size: clamp(40px, 10vw, 64px); }
+  .tiembanh__intro {
+    padding: 80px 20px 0;
+  }
+
+  .tiembanh__watermark {
+    width: 80vw;
+    opacity: 0.2;
+  }
+
+  .tiembanh__title {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  .marquee-wrapper {
+    margin: 0 16px;
+  }
+
+  .marquee-wrapper::before,
+  .marquee-wrapper::after {
+    width: 16px;
+  }
+
+  .video-row-container {
+    flex-wrap: wrap;
+    padding: 0 8px;
+  }
+
+  .video-row-item {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
 
   .tiembanh__bottom {
     grid-template-columns: 1fr 1fr;
+    padding: 0 12px;
   }
 
   .tiembanh__bottom-caption {
     grid-column: 1 / -1;
     text-align: left;
+  }
+
+  .tiembanh__banner {
+    margin: 16px 0 0;
   }
 }
