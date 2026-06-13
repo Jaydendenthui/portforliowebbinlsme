@@ -87,7 +87,7 @@ export default function Lusine() {
   const reelsMenu   = ["/videos/lu1-h264.mp4",  "/videos/lu2-h264.mp4",  "/videos/lu3-h264.mp4"];
   const reelsDrinks = ["/videos/lu4-h264.mp4",  "/videos/lu5-h264.mp4",  "/videos/lu6-h264.mp4"];
   const reelsCake   = ["/videos/lu10-h264.mp4", "/videos/lu11-h264.mp4", "/videos/lu9-h264.mp4"];
-  const reelsOther  = ["/videos/lu-14-h264.mp4",  "/videos/lu-15-h264.mp4",  "/videos/lu-16-h264.mp4", "/videos/lu-17-h264.mp4"];
+  const reelsOther  = ["https://res.cloudinary.com/drith9etg/video/upload/v1781390573/lu-14-h264_e08mbv.mp4",  "https://res.cloudinary.com/drith9etg/video/upload/v1781390580/lu-15-h264_jxnbpi.mp4",  "https://res.cloudinary.com/drith9etg/video/upload/v1781390566/lu-16-h264_gf90k7.mp4", "https://res.cloudinary.com/drith9etg/video/upload/v1781390572/lu-17-h264_p67zoc.mp4"];
 
   return (
     <div className="lusine">
@@ -173,10 +173,10 @@ export default function Lusine() {
       {/* ── CENTERED PORTRAIT PAIR ────────────────────────────── */}
       <div className="lusine__sidebyside lusine__reels--centered">
         <div style={{ aspectRatio: "9/16", overflow: "hidden", background: "#222" }}>
-          <ReelVideo src="/videos/lu-12-h264.mp4" />
+          <ReelVideo src="https://res.cloudinary.com/drith9etg/video/upload/v1781390565/lu-12-h264_lzkyyz.mp4" />
         </div>
         <div style={{ aspectRatio: "9/16", overflow: "hidden", background: "#222" }}>
-          <ReelVideo src="/videos/lu-13-h264.mp4" />
+          <ReelVideo src="https://res.cloudinary.com/drith9etg/video/upload/v1781390565/lu-13-h264_axcdyv.mp4" />
         </div>
       </div>
 

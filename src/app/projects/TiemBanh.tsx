@@ -89,7 +89,7 @@ export default function TiemBanh() {
 
   const videoRow1 = ["/videos/video-01-h264.mp4", "/videos/video-02-h264.mp4", "/videos/video-03-h264.mp4"];
   const videoRow2 = ["/videos/video-04-h264.mp4", "/videos/video-05-h264.mp4"];
-  const videoRow3 = ["/videos/output-compressed.mp4", "/videos/video-06-h264.mp4"];
+  const videoRow3 = ["https://res.cloudinary.com/drith9etg/video/upload/v1781389198/output-compressed_xjqanr.mp4", "/videos/video-06-h264.mp4"];
   const videoRow4 = ["/videos/video-03-h264.mp4", "/videos/video-04-h264.mp4"];
 
   const photoRow3 = [photo01, photo02, photo03, photo04];

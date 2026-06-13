@@ -19,6 +19,6 @@ export const worksData: Work[] = [
     id: "lusine-fb",
     title: "Lusine | MOTION GRAPHIC - PHOTOGRAPHY - GRAPHIC DESIGN",
     date: "2025",
-    imageSrc: "/works/lusine-fb/cover.jpg",
+    imageSrc: "https://res.cloudinary.com/drith9etg/image/upload/v1781390819/cover_rd6qo9.jpg",
   },
 ];
