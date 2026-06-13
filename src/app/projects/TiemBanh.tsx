@@ -140,7 +140,7 @@ export default function TiemBanh() {
       {/* ── BOTTOM — 2 videos + caption ─────────────────────────── */}
       <section className="tiembanh__bottom">
         <video
-          src="/videos/video-09-h264.mp4"
+          src="https://res.cloudinary.com/drith9etg/video/upload/v1781389238/video-09-h264_xye75l.mp4"
           autoPlay
           muted
           loop
@@ -148,7 +148,7 @@ export default function TiemBanh() {
           className="tiembanh__bottom-video"
         />
         <video
-          src="/videos/video-10-h264.mp4"
+          src="https://res.cloudinary.com/drith9etg/video/upload/v1781389228/video-10-h264_d3fsef.mp4"
           autoPlay
           muted
           loop
