@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { motion } from "motion/react";
 import { worksData } from "../data/works";
 import WorkCard from "../components/portfolio/WorkCard";
@@ -47,6 +48,16 @@ export default function Works() {
           </section>
         </main>
       </div>
+
+      <footer className="works-footer flex flex-col items-center justify-center gap-2 pt-16 pb-24 w-full">
+        <Link
+          to="/photography"
+          className="text-black text-3xl md:text-4xl hover:opacity-60 transition-opacity"
+          style={{ fontFamily: "'Monotype Corsiva', cursive" }}
+        >
+          Photography
+        </Link>
+      </footer>
 
       <motion.button
         className="back-to-top-fixed"

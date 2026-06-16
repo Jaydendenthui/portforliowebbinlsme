@@ -1,136 +1,139 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "motion/react";
+import "./Photography.css";
+import "../projects/Lusine.css";
+import "../projects/TiemBanh.css";
 
-// Dummy data for your photography slider. Replace these with your actual image paths.
-const photographyWorks = [
-  { id: 1, src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800", alt: "Editorial portrait" },
-  { id: 2, src: "https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&q=80&w=800", alt: "Fashion shoot" },
-  { id: 3, src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=800", alt: "Nature landscape" },
-  { id: 4, src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=800", alt: "Dark moody aesthetic" },
-  { id: 5, src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=800", alt: "Cinematic architecture" },
-];
-
-// 1. Moved layout array outside the component so it doesn't get re-created on every render
-const layout = [
-  { w: 180, h: 180, mt: 60 },
-  { w: 160, h: 260, mt: 0 },
-  { w: 300, h: 420, mt: 120 },
-  { w: 220, h: 300, mt: 40 },
-  { w: 520, h: 620, mt: 100 }, // BIG center block
-  { w: 180, h: 260, mt: 20 },
-  { w: 220, h: 300, mt: 80 },
-  { w: 200, h: 200, mt: 0 },
-  { w: 620, h: 320, mt: 140 }, // WIDE block
-  { w: 260, h: 200, mt: 20 },
-];
+// ── Placeholder component ─────────────────────────────────────────────────
+const IMG = ({ src }: { src?: string }) =>
+  src ? (
+    <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+  ) : (
+    <div style={{ width: "100%", height: "100%", background: "#222", display: "block" }} />
+  );
 
 export default function Photography() {
-  const scrollContainerRef = useRef(null);
-
   useEffect(() => {
     document.title = "Phat Le Tuan - Photography";
-    return () => {
-      document.title = "Phat Le Tuan";
-    };
+    return () => { document.title = "Phat Le Tuan"; };
   }, []);
 
-  useEffect(() => {
-    const handleWheel = (e) => {
-      const el = scrollContainerRef.current;
-      if (!el) return;
+  // ── L'Usine (8 photos) — replace nulls with imports or URLs ──────────────
+  const lusine: (string | null)[] = ["https://res.cloudinary.com/drith9etg/image/upload/v1781649552/compressed__MG_3992_jtgaui.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649551/compressed__MG_3970_an4fdq.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649550/compressed__MG_3942_axlgdm.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649551/compressed_DSC09317-Enhanced-NR_ad5ypa.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649551/compressed_DSC09305_atmrte.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649175/namo_3_okeha5.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649551/compressed_DSC09294_gczjnu.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781649551/compressed_namo_4_bhav6e.jpg"];
 
-      const maxScrollLeft = el.scrollWidth - el.clientWidth;
-      const currentScrollY = window.scrollY;
-      const threshold = 140; 
+  // ── Red Thread (11 photos) ────────────────────────────────────────────────
+  const redThread: (string | null)[] = ["https://res.cloudinary.com/drith9etg/image/upload/v1781650568/IMG_9981_pb3qpg.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650569/IMG_9959_okmvft.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650562/IMG_0144_xfxw0c.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650571/IMG_0876_-_Copy_ubiua3.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650563/IMG_0667_gdduqq.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650569/IMG_9991_p1suzr.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650565/IMG_0805_-_Copy_ztjsyb.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650570/IMG_0616_exoq1f.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650569/IMG_0384_zzz1u7.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650567/IMG_0632_dvw1b4.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781650542/IMG_0294_vx3tff.jpg"];
 
-      if (e.deltaY > 0) {
-        // --- SCROLLING DOWN ---
-        if (currentScrollY >= threshold && el.scrollLeft < maxScrollLeft) {
-          e.preventDefault(); 
-          el.scrollLeft += e.deltaY; 
-        }
-      } else if (e.deltaY < 0) {
-        // --- SCROLLING UP ---
-        if (currentScrollY <= threshold && el.scrollLeft > 0) {
-          e.preventDefault(); 
-          el.scrollLeft += e.deltaY; 
-        }
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-    };
-  }, []);
+  // ── Egg (4 photos) ────────────────────────────────────────────────────────
+  const egg: (string | null)[] = ["https://res.cloudinary.com/drith9etg/image/upload/v1781651223/IMG_7948_rqa9xv.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781651224/IMG_8042_qfa4ia.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781651224/IMG_8005_sgceem.jpg", "https://res.cloudinary.com/drith9etg/image/upload/v1781651223/IMG_7773_utv9cg.jpg"];
 
   return (
     <motion.div
-      className="photography-page bg-white min-h-screen flex flex-col"
+      className="photography"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      {/* Space for the fixed Navbar */}
-      <div className="h-[150px] w-full shrink-0" />
-
-      {/* Page Title */}
-      <div className="w-full text-center mb-8 px-4 shrink-0">
-        <h1 
-          className="text-black text-5xl md:text-6xl"
-          style={{ fontFamily: "'Monotype Corsiva', cursive" }}
-        >
-          Photography Gallery
-        </h1>
+      {/* ── HEADER ──────────────────────────────────────────────── */}
+      <div className="photo__header">
+        <h1 className="photo__title">Photography'</h1>
       </div>
 
-      {/* Horizontal Scrolling Photo Gallery */}
-      <div 
-        ref={scrollContainerRef}
-        className="w-full py-10 overflow-x-auto scrollbar-hide flex-grow"
-      >
-        <div className="flex items-start gap-16 px-16 w-max">
-          {photographyWorks.map((photo, index) => {
-            const l = layout[index % layout.length];
+      {/* ── L'USINE SECTION ─────────────────────────────────────── */}
+      <p className="lusine__section-label lusine__section-label--right">
+        <strong>Nam et</strong> L'Usine 2025
+      </p>
 
-            return (
-              <div
-                key={photo.id}
-                className="flex-shrink-0 overflow-hidden transition-all duration-500 hover:scale-105"
-                style={{
-                  width: `${l.w}px`,
-                  height: `${l.h}px`,
-                  marginTop: `${l.mt}px`,
-                }}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            );
-          })}
-        </div>
+      {/* 2-col: photos 1–2 */}
+      <div className="photo__grid-2">
+        {lusine.slice(0, 2).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
       </div>
 
-      {/* Extra spacing at the bottom */}
-      <div className="h-[60vh] flex items-center justify-center bg-neutral-50 border-t border-gray-100">
-        <p className="text-gray-400 italic">© Phat Le Tuan Portfolio</p>
+      {/* 2-col: photos 3–4 */}
+      <div className="photo__grid-2">
+        {lusine.slice(2, 4).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
       </div>
 
-      {/* CSS to hide native scrollbars */}
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-      `}</style>
+      {/* 3-col: photos 5–7 */}
+      <div className="photo__grid-3">
+        {lusine.slice(4, 7).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* Full width: photo 8 */}
+      <div className="photo__full">
+        <IMG src={lusine[7] ?? undefined} />
+      </div>
+
+      {/* ── RED THREAD SECTION ──────────────────────────────────── */}
+      <p className="lusine__section-label lusine__section-label--flush">
+        <strong>A Red Thread</strong> Photoshoot
+      </p>
+
+      {/* 3-col: photos 1–3 */}
+      <div className="photo__grid-3">
+        {redThread.slice(0, 3).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* 2-col: photos 4–5 */}
+      <div className="photo__grid-2">
+        {redThread.slice(3, 5).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* 2-col: photos 6–7 */}
+      <div className="photo__grid-2">
+        {redThread.slice(5, 7).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* 2-col: photos 8–9 */}
+      <div className="photo__grid-2">
+        {redThread.slice(7, 9).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* 2-col: photos 10–11 */}
+      <div className="photo__grid-2">
+        {redThread.slice(9, 11).map((src, i) => (
+          <div key={i} className="photo__cell"><IMG src={src ?? undefined} /></div>
+        ))}
+      </div>
+
+      {/* ── EGG SECTION ─────────────────────────────────────────── */}
+      <p className="lusine__section-label lusine__section-label--flush">
+        <strong>Egg</strong> Photoshoot
+      </p>
+
+      {/* 2-col: photos 1–2 */}
+      <div className="photo__grid-2">
+        {egg.slice(0, 2).map((src, i) => (
+          <div key={i} className="photo__cell">
+            <IMG src={src ?? undefined} />
+          </div>
+        ))}
+      </div>
+
+      {/* 2-col unequal: photos 3–4 (left narrower, right wider) */}
+      <div className="photo__grid-2-unequal">
+        {egg.slice(2, 4).map((src, i) => (
+          <div key={i} className="photo__cell">
+            <IMG src={src ?? undefined} />
+          </div>
+        ))}
+      </div>
+
     </motion.div>
   );
 }

@@ -17,7 +17,7 @@
   z-index: 3;
 }
 
-/* ── FULL WIDTH MENU IMAGE ───────────────────────────────────────────────── */
+/* ── FULL WIDTH MENU VIDEO ───────────────────────────────────────────────── */
 .galbi__full {
   width: 100%;
   margin-top: -40px;
@@ -99,8 +99,46 @@
   margin: 0 auto 4px;
 }
 
-/* ── MOBILE ──────────────────────────────────────────────────────────────── */
+/* ── TABLET (≤ 900px) ────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .galbi__voucher {
+    max-width: 90%;
+  }
+
+  .galbi__billboard--small {
+    max-width: 100%;
+  }
+}
+
+/* ── MOBILE (≤ 600px) ────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .galbi__sidebyside    { grid-template-columns: 1fr; }
-  .galbi__billboard--small { max-width: 100%; }
+  .galbi .lusine__intro::before {
+    height: 40px;
+  }
+
+  .galbi__full {
+    margin-top: -20px;
+  }
+
+  .galbi__sidebyside {
+    grid-template-columns: 1fr;
+  }
+
+  .galbi__sidebyside-item > div {
+    min-height: 200px;
+  }
+
+  .galbi__voucher {
+    max-width: 100%;
+    margin: 16px auto;
+  }
+
+  .galbi__billboard--small {
+    max-width: 100%;
+  }
+
+  .galbi__billboard > div,
+  .galbi__full > div {
+    min-height: 200px;
+  }
 }
