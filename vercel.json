@@ -1,5 +1,6 @@
 {
   "outputDirectory": "dist",
+  "installCommand": "pnpm install --dev",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
